@@ -73,7 +73,7 @@ MonoBehaviour:
   m_MinSize: {x: 204, y: 344}
   m_MaxSize: {x: 4004, y: 8044}
   vertical: 1
-  controlID: 106
+  controlID: 21
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_MinSize: {x: 917, y: 344}
   m_MaxSize: {x: 22012, y: 10022}
   vertical: 0
-  controlID: 174
+  controlID: 15
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -192,7 +192,7 @@ MonoBehaviour:
   m_MinSize: {x: 202, y: 344}
   m_MaxSize: {x: 4002, y: 8044}
   vertical: 1
-  controlID: 54
+  controlID: 112
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -595,9 +595,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 2c290000
-      m_LastClickedID: 0
-      m_ExpandedIDs: 2cfbffff
+      m_SelectedIDs: 9e59ffff
+      m_LastClickedID: -42594
+      m_ExpandedIDs: a659ffffb459ffff96520000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -698,7 +698,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Resources/PhotonPrefabs
   m_ViewMode: 0
   m_StartGridSize: 64
   m_LastFolders: []
@@ -710,7 +710,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 40500000
     m_LastClickedID: 20544
-    m_ExpandedIDs: 00000000fc3c0000283e0000643e0000663e0000bc3e0000f43e0000803f0000164000006c4100001a420000b8420000
+    m_ExpandedIDs: 00000000b83c0000e43d0000203e0000223e0000783e0000b03e00003c3f0000d23f000028410000d641000074420000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -738,21 +738,21 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 77}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff00000000fc3c0000283e0000643e0000663e0000bc3e0000f43e0000803f0000164000006c4100001a420000b8420000
+    m_ExpandedIDs: ffffffff00000000b83c0000e43d0000203e0000223e0000783e0000b03e00003c3f0000d23f000028410000d641000074420000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: GizmosDraw
+      m_OriginalName: GizmosDraw
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 10446
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 10}
     m_SearchString: 
@@ -823,16 +823,16 @@ MonoBehaviour:
   m_ShowContextualTools: 0
   m_WindowGUID: 5466c96551c8f6d4780e4eb929f86acc
   m_Gizmos: 1
-  m_SceneIsLit: 1
+  m_SceneIsLit: 0
   m_SceneLighting: 1
   m_2DMode: 0
   m_isRotationLocked: 0
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -55.713894, y: -32.829826, z: 84.89267}
+    m_Target: {x: -4.9147606, y: -1.354037, z: -5.953313}
     speed: 2
-    m_Value: {x: -4.9147606, y: -1.354037, z: -5.953313}
+    m_Value: {x: -55.713894, y: -32.829826, z: 84.89267}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -843,7 +843,7 @@ MonoBehaviour:
   m_SceneViewState:
     showFog: 1
     showMaterialUpdate: 0
-    showSkybox: 1
+    showSkybox: 0
     showFlares: 1
     showImageEffects: 1
     showParticleSystems: 1
@@ -861,13 +861,13 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: -0.22945745, y: 0.33395606, z: -0.08417484, w: -0.91035604}
+    m_Target: {x: -0.09954126, y: 0.873068, z: -0.20065965, w: -0.43310326}
     speed: 2
-    m_Value: {x: -0.09954132, y: 0.8730685, z: -0.20065977, w: -0.43310353}
+    m_Value: {x: -0.22945622, y: 0.33395427, z: -0.08417439, w: -0.91035116}
   m_Size:
-    m_Target: 171.45619
+    m_Target: 17.692337
     speed: 2
-    m_Value: 17.692337
+    m_Value: 171.45619
   m_Ortho:
     m_Target: 0
     speed: 2
