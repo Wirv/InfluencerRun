@@ -259,8 +259,16 @@ public class Player_Behaviour : MonoBehaviour
         if (collision.gameObject.tag == "Obstacle")
             if (!GameOver)
             {
-                transform.SetParent(null);
-                StartCoroutine(GOver());
+                Destroy(collision.gameObject);
+                force = 5;
+                StartCoroutine(Hit());
             }
+    }
+
+    public IEnumerator Hit()
+    {
+        yield return new WaitForSeconds(.2f);
+        force = 8;
+
     }
 }

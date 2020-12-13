@@ -63,7 +63,7 @@ public class GameFlow : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        if (PV.IsMine && PhotonNetwork.IsMasterClient)
+        if (PV.IsMine)
         {
             points += Time.deltaTime * 2;
             PointsTXT.text = ((int)points).ToString();
@@ -150,16 +150,16 @@ public class GameFlow : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(1);
 
-        if(counter == 10)
-        {
-            counter += 1;
-            IncrocioinGame = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Incrocio"), new Vector3(nextGroundSpawn.x, nextGroundSpawn.y, nextGroundSpawn.z + 15), Incrocio.rotation).gameObject;
+        //if(counter == 10)
+        //{
+        //    counter += 1;
+        //    IncrocioinGame = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Incrocio"), new Vector3(nextGroundSpawn.x, nextGroundSpawn.y, nextGroundSpawn.z + 15), Incrocio.rotation).gameObject;
+        //
+        //    Z = 90;
+        //    nextGroundSpawn.z += Z;
+        //}
 
-            Z = 90;
-            nextGroundSpawn.z += Z;
-        }
-
-        if (counter < 10)
+        if (counter < 1000000)
         {
             GameObject ground;
 

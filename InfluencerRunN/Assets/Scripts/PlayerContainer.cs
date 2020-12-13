@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class PlayerContainer : MonoBehaviour
 {
+    public static PlayerContainer instance;
     PhotonView PV;
     public GameObject cameramain;
 
     private void Awake()
     {
+        instance = this;
         PV = GetComponent<PhotonView>();
     }
 
@@ -33,6 +35,6 @@ public class PlayerContainer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       // if(PV.IsMine) transform.Translate(Vector3.forward * Player_Behaviour.instance.force * Time.deltaTime);
+       if(PV.IsMine) transform.Translate(Vector3.forward * Player_Behaviour.instance.force * Time.deltaTime);
     }
 }
