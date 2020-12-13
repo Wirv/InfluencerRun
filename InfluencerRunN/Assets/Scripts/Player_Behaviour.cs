@@ -11,13 +11,17 @@ public class Player_Behaviour : MonoBehaviour
     public Transform posPrecedente;
     public static Player_Behaviour instance;
     public Rigidbody rb;
+    public Animator myAnim;
     public bool jump = false;
     public bool movement = false;
+    public bool slide = false;
     public float force;
     public float forceJumpUp = 2;
     public float forceJumpDown = -2;
     public float timingJup = 1;
     public float timingJdown = 1;
+    public float timingSlideIn = 1;
+    public float timingSlideOut = 0.20f;
     public bool GameOver = false;
     public CamMove camera;
 
@@ -67,7 +71,7 @@ public class Player_Behaviour : MonoBehaviour
     {
         transform.position = Vector3.Lerp(transform.position, posDesignata.transform.position, force * Time.deltaTime);
 
-        if ((Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)) && jump == false && movement == false)
+        if ((Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)) && jump == false && movement == false && slide==false)
         {
             if (posDesignata == camera.PosD.transform)
             {
@@ -85,7 +89,7 @@ public class Player_Behaviour : MonoBehaviour
 
         }
 
-        if ((Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)) && jump == false && movement == false)
+        if ((Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)) && jump == false && movement == false && slide == false)
         {
             if (posDesignata == camera.PosS.transform)
             {
@@ -104,12 +108,19 @@ public class Player_Behaviour : MonoBehaviour
         }
 
 
-        if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Space)) && jump == false && movement == false)
+        if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Space)) && jump == false && movement == false && slide==false)
         {
             jump = true;
             posPrecedente = posDesignata;
             posDesignata = camera.Jumping(posDesignata);
             StartCoroutine(StopJump());
+        }
+
+        if ((Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S)) && jump == false && movement == false && slide == false)
+        {
+            slide = true;
+            
+            StartCoroutine(StopSlide());
         }
 
     }
@@ -236,6 +247,15 @@ public class Player_Behaviour : MonoBehaviour
         posDesignata = posPrecedente;
         yield return new WaitForSeconds(timingJdown);
         jump = false;
+    }
+
+    IEnumerator StopSlide()
+    {
+        myAnim.Play("PlayerSlide");
+        yield return new WaitForSeconds(timingSlideIn);
+        myAnim.Play("PlayerSlideOut");
+        yield return new WaitForSeconds(timingSlideOut);
+        slide = false;
     }
 
     IEnumerator StopMovement()
