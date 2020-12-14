@@ -141,7 +141,7 @@ public class Player_Behaviour : MonoBehaviour
         }
         #endregion
 
-        #region MobileInouts
+        #region MobileInputs
         if (Input.touches.Length != 0)
         {
             if (Input.touches[0].phase == TouchPhase.Began)
@@ -219,7 +219,9 @@ public class Player_Behaviour : MonoBehaviour
                 if (y < 0)
                 {
                     //sotto
-                    Reset();
+                    slide = true;
+
+                    StartCoroutine(StopSlide());
                 }
                 else
                 {

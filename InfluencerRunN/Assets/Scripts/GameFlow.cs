@@ -6,10 +6,22 @@ using Photon.Pun;
 using System.IO;
 using Photon.Realtime;
 
+public enum Direzione
+{
+    Nord = 0,
+    Ovest = -1,
+    Est = 1,
+    Sud = 2,
+    None,
+    sinistra,
+    destra
+}
+
 public class GameFlow : MonoBehaviourPunCallbacks
 {
     public static GameFlow instance;
     PhotonView PV;
+    [SerializeField] public static Direzione direction = Direzione.Nord;
     public Transform groundObj;
     private Vector3 nextGroundSpawn;
     public Transform[] Obstacles;
@@ -90,6 +102,7 @@ public class GameFlow : MonoBehaviourPunCallbacks
         changeDir = false;
         
         yield return new WaitForSeconds(1);
+        CalculateNextGround(60);
         counter = 0;
     }
 
@@ -145,66 +158,46 @@ public class GameFlow : MonoBehaviourPunCallbacks
         }
     }
 
+    private void CalculateNextGround(float x)
+    {
+        switch (direction)
+        {
+            case Direzione.Nord:
+                nextGroundSpawn.z += x;
+                break;
+
+            case Direzione.Ovest:
+                nextGroundSpawn.x -= x;
+                break;
+
+            case Direzione.Est:
+                nextGroundSpawn.x += x;
+                break;
+
+            case Direzione.Sud:
+                nextGroundSpawn.z -= x;
+                break;
+        }
+    }
     
     IEnumerator spawnGround()
     {
         yield return new WaitForSeconds(1);
 
-        //if(counter == 10)
-        //{
-        //    counter += 1;
-        //    IncrocioinGame = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Incrocio"), new Vector3(nextGroundSpawn.x, nextGroundSpawn.y, nextGroundSpawn.z + 15), Incrocio.rotation).gameObject;
-        //
-        //    Z = 90;
-        //    nextGroundSpawn.z += Z;
-        //}
-
-        if (counter < 1000000)
+        if(counter == 10)
         {
-            GameObject ground;
-
-            ground = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "ground"), nextGroundSpawn, groundObj.rotation);
+            CalculateNextGround(Z);
             counter += 1;
-            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
-            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
-            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
-            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
-            if (randSecondSpawn == 1)
-            {
-                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
-                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
-                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
-                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
-            }
-            if (RandSpawnTrap() == 0)
-            {
-                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Trap"), new Vector3(-8, Obstacles[3].position.y, nextGroundSpawn.z), Obstacles[3].rotation);
-                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Trap"), new Vector3(2.75f, Obstacles[3].position.y, nextGroundSpawn.z), Obstacles[3].rotation);
-                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Trap"), new Vector3(-2.75f, Obstacles[3].position.y, nextGroundSpawn.z), Obstacles[3].rotation);
-                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Trap"), new Vector3(8, Obstacles[3].position.y, nextGroundSpawn.z), Obstacles[3].rotation);
-            }
-
-            
-            Z = 20;
-            nextGroundSpawn.z += Z;
-
-            ground = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "ground"), nextGroundSpawn, groundObj.rotation);
-            counter += 1;
-            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
-            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
-            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
-            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
-            if (randSecondSpawn == 1)
-            {
-                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
-                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
-                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
-                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
-            }
-
-            nextGroundSpawn.z += Z;
-        }
+            IncrocioinGame = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Incrocio"), new Vector3(nextGroundSpawn.x, nextGroundSpawn.y, nextGroundSpawn.z), SpawnRotation()).gameObject;
         
+            Z = 0;
+            CalculateNextGround(Z);
+        }
+
+        if (counter < 10)
+        {
+            Spawning();        
+        }
             
         StartCoroutine(spawnGround());
     }
@@ -218,5 +211,115 @@ public class GameFlow : MonoBehaviourPunCallbacks
     public void RestartGame()
     {
         Launcher.instance.StartGame();
+    }
+
+    void Spawning()
+    {
+        GameObject ground;
+
+        ground = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "ground"), nextGroundSpawn, SpawnRotation());
+        counter += 1;
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
+        if (randSecondSpawn == 1)
+        {
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
+        }
+        if (RandSpawnTrap() == 0)
+        {
+            SpawnTraps();
+        }
+
+
+        Z = 20;
+        CalculateNextGround(Z);
+
+        ground = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "ground"), nextGroundSpawn, SpawnRotation());
+        counter += 1;
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
+        if (randSecondSpawn == 1)
+        {
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
+        }
+
+        CalculateNextGround(Z);
+
+    }
+
+    private Quaternion SpawnRotation()
+    {
+        switch (direction)
+        {
+            case Direzione.Nord:
+                return Quaternion.Euler(new Vector3(0, 0, 0));
+                break;
+
+            case Direzione.Ovest:
+                return Quaternion.Euler(new Vector3(0, -90, 0));
+                break;
+
+            case Direzione.Est:
+                return Quaternion.Euler(new Vector3(0, 90, 0));
+                break;
+
+            case Direzione.Sud:
+                return Quaternion.Euler(new Vector3(0, 180, 0));
+                break;
+            default:
+                return Quaternion.Euler(new Vector3(0, 0, 0));
+                break;
+        }
+    }
+
+    private void SpawnTraps()
+    {
+        
+        switch (direction)
+        {
+            case Direzione.Nord:
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Trap"), new Vector3(nextGroundSpawn.x - 8, Obstacles[3].position.y, nextGroundSpawn.z), SpawnRotation());
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Trap"), new Vector3(nextGroundSpawn.x + 2.75f, Obstacles[3].position.y, nextGroundSpawn.z), SpawnRotation());
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Trap"), new Vector3(nextGroundSpawn.x - 2.75f, Obstacles[3].position.y, nextGroundSpawn.z), SpawnRotation());
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Trap"), new Vector3(nextGroundSpawn.x + 8, Obstacles[3].position.y, nextGroundSpawn.z), SpawnRotation());
+                break;
+
+            case Direzione.Ovest:
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Trap"), new Vector3(nextGroundSpawn.x, Obstacles[3].position.y, nextGroundSpawn.z - 8), SpawnRotation());
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Trap"), new Vector3(nextGroundSpawn.x, Obstacles[3].position.y, nextGroundSpawn.z + 2.75f), SpawnRotation());
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Trap"), new Vector3(nextGroundSpawn.x, Obstacles[3].position.y, nextGroundSpawn.z - 2.75f), SpawnRotation());
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Trap"), new Vector3(nextGroundSpawn.x, Obstacles[3].position.y, nextGroundSpawn.z + 8), SpawnRotation());
+                break;
+
+            case Direzione.Est:
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Trap"), new Vector3(nextGroundSpawn.x, Obstacles[3].position.y, nextGroundSpawn.z -8), SpawnRotation());
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Trap"), new Vector3(nextGroundSpawn.x, Obstacles[3].position.y, nextGroundSpawn.z +2.75f), SpawnRotation());
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Trap"), new Vector3(nextGroundSpawn.x, Obstacles[3].position.y, nextGroundSpawn.z -2.75f), SpawnRotation());
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Trap"), new Vector3(nextGroundSpawn.x, Obstacles[3].position.y, nextGroundSpawn.z +8), SpawnRotation());
+                break;
+
+            case Direzione.Sud:
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Trap"), new Vector3(nextGroundSpawn.x - 8, Obstacles[3].position.y, nextGroundSpawn.z), SpawnRotation());
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Trap"), new Vector3(nextGroundSpawn.x + 2.75f, Obstacles[3].position.y, nextGroundSpawn.z), SpawnRotation());
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Trap"), new Vector3(nextGroundSpawn.x - 2.75f, Obstacles[3].position.y, nextGroundSpawn.z), SpawnRotation());
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Trap"), new Vector3(nextGroundSpawn.x + 8, Obstacles[3].position.y, nextGroundSpawn.z), SpawnRotation());
+                break;
+            default:
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Trap"), new Vector3(nextGroundSpawn.x - 8, Obstacles[3].position.y, nextGroundSpawn.z), SpawnRotation());
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Trap"), new Vector3(nextGroundSpawn.x + 2.75f, Obstacles[3].position.y, nextGroundSpawn.z), SpawnRotation());
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Trap"), new Vector3(nextGroundSpawn.x - 2.75f, Obstacles[3].position.y, nextGroundSpawn.z), SpawnRotation());
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Trap"), new Vector3(nextGroundSpawn.x + 8, Obstacles[3].position.y, nextGroundSpawn.z), SpawnRotation());
+                break;
+        }
     }
 }

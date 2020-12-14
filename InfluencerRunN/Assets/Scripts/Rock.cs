@@ -13,6 +13,13 @@ public class Rock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, -1) * 600 * Time.deltaTime, ForceMode.Force);
+        if(GameFlow.direction == Direzione.Nord)
+             GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, -1) * 600 * Time.deltaTime, ForceMode.Force);
+        else if (GameFlow.direction == Direzione.Ovest)
+            GetComponent<Rigidbody>().AddForce(new Vector3(+1, 0, 0) * 600 * Time.deltaTime, ForceMode.Force);
+        else if (GameFlow.direction == Direzione.Est)
+            GetComponent<Rigidbody>().AddForce(new Vector3(-1, 0, 0) * 600 * Time.deltaTime, ForceMode.Force);
+        else if (GameFlow.direction == Direzione.Sud)
+            GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, +1) * 600 * Time.deltaTime, ForceMode.Force);
     }
 }

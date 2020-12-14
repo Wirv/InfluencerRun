@@ -13,6 +13,13 @@ public class SpawnPoints : MonoBehaviourPunCallbacks
         if(other.tag == "Player")
         {
             occupato = true;
+            other.gameObject.transform.parent.transform.parent.GetComponent<PlayerContainer>().tagSpawn = gameObject.tag;
+
+            if(other.transform.parent.transform.parent.GetComponent<PlayerContainer>().tagSpawn == gameObject.tag)
+            {
+                other.transform.parent.transform.parent.GetComponent<PlayerContainer>().changedir = false;
+                other.transform.parent.transform.parent.GetComponent<PlayerContainer>().pointDirection = null;
+            }
         }
     }
 }
