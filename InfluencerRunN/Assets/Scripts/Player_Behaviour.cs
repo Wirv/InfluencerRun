@@ -318,4 +318,12 @@ public class Player_Behaviour : MonoBehaviour
         force = 8;
 
     }
+
+    public IEnumerator SpeedBoost(float boostValue, float duration)
+    {
+        float oldSpeed = force;
+        force += boostValue;
+        yield return new WaitForSeconds(duration);
+        force = oldSpeed;
+    }
 }
