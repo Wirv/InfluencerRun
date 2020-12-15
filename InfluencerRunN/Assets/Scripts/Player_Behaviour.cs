@@ -24,6 +24,7 @@ public class Player_Behaviour : MonoBehaviour
     public float timingSlideOut = 0.20f;
     public bool GameOver = false;
     public CamMove camera;
+    public int posizioneGara = 1;
 
     private Vector2 startTouch, swipeDelta;
     private bool tap = false, isDraging = false;
@@ -285,6 +286,30 @@ public class Player_Behaviour : MonoBehaviour
                 force = 5;
                 StartCoroutine(Hit());
             }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Player")
+        {
+            if(posizioneGara > 1)
+                other.gameObject.transform.parent.GetComponent<Player_Behaviour>().posizioneGara -= 1;
+            
+            if(posizioneGara < 4)
+                posizioneGara += 1;
+
+            for (int i = 0; i < transform.parent.transform.childCount; i++)
+            {
+                if (transform.parent.transform.GetChild(i).gameObject.name == "Destroyer")
+                {
+                    if(posizioneGara == 4)
+                        transform.parent.transform.GetChild(i).gameObject.SetActive(true);
+                    else
+                        transform.parent.transform.GetChild(i).gameObject.SetActive(false);
+                }
+            }
+
+        }
     }
 
     public IEnumerator Hit()
