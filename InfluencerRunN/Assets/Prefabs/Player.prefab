@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5987992863548315753}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -79,6 +79,7 @@ MonoBehaviour:
   timingSlideOut: 0.2
   GameOver: 0
   camera: {fileID: 0}
+  posizioneGara: 1
 --- !u!114 &596060276943537507
 MonoBehaviour:
   m_ObjectHideFlags: 0
