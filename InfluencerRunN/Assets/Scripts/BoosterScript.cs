@@ -5,14 +5,14 @@ using UnityEngine;
 public class BoosterScript : MonoBehaviour
 {
 
-    public float SpeedBoost = 1f; //la velocità da aggiungere al player
-    public float BoostDuration = 1f;//quanti secondi dura il boost
+    public float SpeedBoost = 800f; //la velocità da aggiungere al player
+    public float BoostDuration = 3f;//quanti secondi dura il boost
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            Player_Behaviour pScript = other.GetComponent<Player_Behaviour>(); // prendi lo script del player
+            Player_Behaviour pScript = other.transform.parent.GetComponent<Player_Behaviour>(); // prendi lo script del player
 
             if (pScript!=null)
             {

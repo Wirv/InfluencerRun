@@ -16,6 +16,7 @@ public class Player_Behaviour : MonoBehaviour
     public bool movement = false;
     public bool slide = false;
     public float force;
+    public float speed = 8;
     public float forceJumpUp = 2;
     public float forceJumpDown = -2;
     public float timingJup = 1;
@@ -45,11 +46,7 @@ public class Player_Behaviour : MonoBehaviour
             posDesignata = camera.PosC.transform;
             startTouch = swipeDelta = Vector2.zero;
         }
-        else if (!PV.IsMine)
-        {
-            Destroy(rb);
-            Destroy(this);
-        }
+        
     }
 
     public Vector2 SwipeDelta { get { return swipeDelta; } }
@@ -283,8 +280,11 @@ public class Player_Behaviour : MonoBehaviour
             if (!GameOver)
             {
                 Destroy(collision.gameObject);
-                force = 5;
-                StartCoroutine(Hit());
+                if (PV.IsMine)
+                {
+                    force = 400;
+                    StartCoroutine(Hit());
+                }
             }
     }
 
@@ -292,6 +292,7 @@ public class Player_Behaviour : MonoBehaviour
     {
         if(other.tag == "Player")
         {
+            Debug.Log(other.gameObject.name);
             if(posizioneGara > 1)
                 other.gameObject.transform.parent.GetComponent<Player_Behaviour>().posizioneGara -= 1;
             
@@ -315,7 +316,7 @@ public class Player_Behaviour : MonoBehaviour
     public IEnumerator Hit()
     {
         yield return new WaitForSeconds(.2f);
-        force = 8;
+        force = 500;
 
     }
 

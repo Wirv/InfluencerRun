@@ -42,6 +42,7 @@ public class GameFlow : MonoBehaviourPunCallbacks
     private bool spawned = false;
     private int numberPlayers;
     Player[] allPlayers;
+    public static bool start = false;
 
     private void Awake()
     {
@@ -67,7 +68,7 @@ public class GameFlow : MonoBehaviourPunCallbacks
             if(allPlayers[i] == PhotonNetwork.LocalPlayer)
                 PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerContainer"), spawnPoints[i].gameObject.transform.position, Quaternion.identity);
         }
-
+        start = true;
         if(PhotonNetwork.IsMasterClient)
         StartCoroutine(spawnGround());
     }

@@ -21,8 +21,9 @@ public class ChangeDirTrigger : MonoBehaviour
             if (other.gameObject.tag == "Player")
             {
 
-                if (other.transform.parent.GetComponent<Player_Behaviour>().posDesignata == CamMove.instance.PosS.transform || other.transform.parent.GetComponent<Player_Behaviour>().posDesignata == CamMove.instance.PosJumpS.transform)
+                if (other.transform.parent.GetComponent<Player_Behaviour>().posDesignata == other.transform.parent.GetComponent<Player_Behaviour>().camera.PosS.transform || other.transform.parent.GetComponent<Player_Behaviour>().posDesignata == other.transform.parent.GetComponent<Player_Behaviour>().camera.PosJumpS.transform)
                 {
+                    direction = Direzione.sinistra;
                     if (GameFlow.direction == Direzione.Nord) { GameFlow.direction = Direzione.Ovest; }
                     else if (GameFlow.direction == Direzione.Ovest) { GameFlow.direction = Direzione.Sud; }
                     else if (GameFlow.direction == Direzione.Est) { GameFlow.direction = Direzione.Nord; }
@@ -30,10 +31,11 @@ public class ChangeDirTrigger : MonoBehaviour
                     other.gameObject.transform.parent.transform.parent.GetComponent<PlayerContainer>().changedir = true;
                     other.gameObject.transform.parent.transform.parent.GetComponent<PlayerContainer>().pointDirection = sinistra;
                     GameFlow.changeDir = true;
-                    direction = Direzione.sinistra;
+                    
                 }
-                else if (other.transform.parent.GetComponent<Player_Behaviour>().posDesignata == CamMove.instance.PosD.transform || other.transform.parent.GetComponent<Player_Behaviour>().posDesignata == CamMove.instance.PosJumpD.transform)
+                else if (other.transform.parent.GetComponent<Player_Behaviour>().posDesignata == other.transform.parent.GetComponent<Player_Behaviour>().camera.PosD.transform || other.transform.parent.GetComponent<Player_Behaviour>().posDesignata == other.transform.parent.GetComponent<Player_Behaviour>().camera.PosJumpD.transform)
                 {
+                    direction = Direzione.destra;
                     if (GameFlow.direction == Direzione.Nord) { GameFlow.direction = Direzione.Est; }
                     else if (GameFlow.direction == Direzione.Est) { GameFlow.direction = Direzione.Sud; }
                     else if (GameFlow.direction == Direzione.Ovest) { GameFlow.direction = Direzione.Nord; }
@@ -41,13 +43,14 @@ public class ChangeDirTrigger : MonoBehaviour
                     other.gameObject.transform.parent.transform.parent.GetComponent<PlayerContainer>().changedir = true;
                     other.gameObject.transform.parent.transform.parent.GetComponent<PlayerContainer>().pointDirection = destra;
                     GameFlow.changeDir = true;
-                    direction = Direzione.destra;
+                    
                 }
-                else if (other.transform.parent.GetComponent<Player_Behaviour>().posDesignata == CamMove.instance.PosC.transform || other.transform.parent.GetComponent<Player_Behaviour>().posDesignata == CamMove.instance.PosJumpC.transform)
+                else if (other.transform.parent.GetComponent<Player_Behaviour>().posDesignata == other.transform.parent.GetComponent<Player_Behaviour>().camera.PosC.transform || other.transform.parent.GetComponent<Player_Behaviour>().posDesignata == other.transform.parent.GetComponent<Player_Behaviour>().camera.PosJumpC.transform)
                 {
                     int x = Random.Range(0, 2);
                     if (x == 0)
                     {
+                        direction = Direzione.sinistra;
                         if (GameFlow.direction == Direzione.Nord) { GameFlow.direction = Direzione.Ovest; }
                         else if (GameFlow.direction == Direzione.Ovest) { GameFlow.direction = Direzione.Sud; }
                         else if (GameFlow.direction == Direzione.Est) { GameFlow.direction = Direzione.Nord; }
@@ -55,10 +58,11 @@ public class ChangeDirTrigger : MonoBehaviour
                         other.gameObject.transform.parent.transform.parent.GetComponent<PlayerContainer>().changedir = true;
                         other.gameObject.transform.parent.transform.parent.GetComponent<PlayerContainer>().pointDirection = sinistra;
                         GameFlow.changeDir = true;
-                        direction = Direzione.sinistra;
+                        
                     }
                     else
                     {
+                        direction = Direzione.destra;
                         if (GameFlow.direction == Direzione.Nord) { GameFlow.direction = Direzione.Est; }
                         else if (GameFlow.direction == Direzione.Est) { GameFlow.direction = Direzione.Sud; }
                         else if (GameFlow.direction == Direzione.Ovest) { GameFlow.direction = Direzione.Nord; }
@@ -66,7 +70,7 @@ public class ChangeDirTrigger : MonoBehaviour
                         other.gameObject.transform.parent.transform.parent.GetComponent<PlayerContainer>().changedir = true;
                         other.gameObject.transform.parent.transform.parent.GetComponent<PlayerContainer>().pointDirection = destra;
                         GameFlow.changeDir = true;
-                        direction = Direzione.destra;
+                        
                     }
                 }
             }

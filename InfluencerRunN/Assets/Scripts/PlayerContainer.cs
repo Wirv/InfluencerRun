@@ -26,26 +26,19 @@ public class PlayerContainer : MonoBehaviour
         if (PV.IsMine)
             GameFlow.instance.PlayerContainer = gameObject;
         else
-        {
-            Destroy(cameramain.GetComponent<CamMove>().PosC.gameObject);
-            Destroy(cameramain.GetComponent<CamMove>().PosD.gameObject);
-            Destroy(cameramain.GetComponent<CamMove>().PosS.gameObject);
-            Destroy(cameramain.GetComponent<CamMove>().PosJumpC.gameObject);
-            Destroy(cameramain.GetComponent<CamMove>().PosJumpD.gameObject);
-            Destroy(cameramain.GetComponent<CamMove>().PosJumpS.gameObject);
-
-            Destroy(cameramain);
+        {            
+            Destroy(cameramain.GetComponent<Camera>());
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-       if(PV.IsMine)
+       if(PV.IsMine && GameFlow.start == true)
         {
             if (changedir == false && pointDirection == null)
             {
-                transform.Translate(Vector3.forward * Player_Behaviour.instance.force * Time.deltaTime);
+                gameObject.GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.forward) * Player_Behaviour.instance.force * Time.deltaTime;
                 Target = null;
             }
             else if (changedir == true && pointDirection != null)
@@ -56,8 +49,8 @@ public class PlayerContainer : MonoBehaviour
                         if (pointDirection.transform.GetChild(i).tag == tagSpawn)
                             Target = pointDirection.transform.GetChild(i).transform;
                     }
-                transform.rotation = Quaternion.Lerp(transform.rotation, PlayerRotation(), Player_Behaviour.instance.force * Time.deltaTime);
-                transform.position = Vector3.Lerp(transform.position, Target.position, (Player_Behaviour.instance.force / 2) * Time.deltaTime);
+                transform.rotation = Quaternion.Lerp(transform.rotation, PlayerRotation(), Player_Behaviour.instance.speed * Time.deltaTime);
+                transform.position = Vector3.Lerp(transform.position, Target.position, (Player_Behaviour.instance.speed / 2) * Time.deltaTime);
             }
         }
     }
