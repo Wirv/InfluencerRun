@@ -50,6 +50,9 @@ ScriptsOnlyBuild:
     - SuperBasicController
     - emotitron.TestPackObject
     PhotonUnityNetworking.Editor.dll:
+    - Photon.Pun.PhotonAnimatorViewEditor
+    - Photon.Pun.PhotonTransformViewEditor
+    - Photon.Pun.PhotonViewInspector
     - Photon.Pun.PunSceneSettings
     PhotonUnityNetworking.dll:
     - Photon.Pun.PhotonAnimatorView
@@ -609,7 +612,7 @@ ScriptsOnlyBuild:
     className: AutoZoom
   - hash:
       serializedVersion: 2
-      Hash: 6dac41a9ea8660199893f439b1f26dd8
+      Hash: 09a48a91b570533734cac23aee9db64e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerContainer
@@ -1065,7 +1068,7 @@ ScriptsOnlyBuild:
     className: PointedAtGameObjectInfo
   - hash:
       serializedVersion: 2
-      Hash: c1cadeceb079923709ec00e6b780d5bd
+      Hash: 42ed9496b6a16d927079af455d94b68e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Player_Behaviour

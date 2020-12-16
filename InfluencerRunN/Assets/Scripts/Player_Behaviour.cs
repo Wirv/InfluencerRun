@@ -20,7 +20,7 @@ public class Player_Behaviour : MonoBehaviour
     public float forceJumpUp = 2;
     public float forceJumpDown = -2;
     public float timingJup = 1;
-    public float timingJdown = 1;
+    public float timingJdown = .5f;
     public float timingSlideIn = 1;
     public float timingSlideOut = 0.20f;
     public bool GameOver = false;
@@ -176,7 +176,7 @@ public class Player_Behaviour : MonoBehaviour
             if (Mathf.Abs(x) > Mathf.Abs(y))
             {
                 //Sinistra o destra
-                if (x < 0)
+                if (x < 0 && jump == false && movement == false && slide == false)
                 {
                     //sinistra
                     if (posDesignata == camera.PosD.transform)
@@ -193,7 +193,7 @@ public class Player_Behaviour : MonoBehaviour
                         StartCoroutine(StopMovement());
                     }
                 }
-                else
+                else if( x > 0 && jump == false && movement == false && slide == false)
                 {
                     //destra
                     if (posDesignata == camera.PosS.transform)
@@ -214,14 +214,14 @@ public class Player_Behaviour : MonoBehaviour
             else
             {
                 //Sopra o sotto
-                if (y < 0)
+                if (y < 0 && jump == false && movement == false && slide == false)
                 {
                     //sotto
                     slide = true;
 
                     StartCoroutine(StopSlide());
                 }
-                else
+                else if(y > 0 && jump == false && movement == false && slide == false)
                 {
                     //sopra
                     jump = true;

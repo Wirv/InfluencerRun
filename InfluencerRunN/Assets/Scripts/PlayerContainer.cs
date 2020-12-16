@@ -2,8 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Realtime;
 
-public class PlayerContainer : MonoBehaviour
+public class PlayerContainer : MonoBehaviourPunCallbacks
 {
     public static PlayerContainer instance;
     PhotonView PV;
@@ -12,6 +13,9 @@ public class PlayerContainer : MonoBehaviour
     public GameObject pointDirection;
     private Transform Target;
     public string tagSpawn;
+    public Rigidbody rigidbody;
+    public Vector3 networkPosition;
+    public Quaternion networkRotation;
 
     private void Awake()
     {
@@ -21,6 +25,7 @@ public class PlayerContainer : MonoBehaviour
 
     private void Start()
     {
+        rigidbody = gameObject.GetComponent<Rigidbody>();
         pointDirection = null;
         Target = null;
         if (PV.IsMine)
@@ -38,7 +43,7 @@ public class PlayerContainer : MonoBehaviour
         {
             if (changedir == false && pointDirection == null)
             {
-                gameObject.GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.forward) * Player_Behaviour.instance.force * Time.deltaTime;
+                rigidbody.velocity = transform.TransformDirection(Vector3.forward) * Player_Behaviour.instance.force * Time.deltaTime;
                 Target = null;
             }
             else if (changedir == true && pointDirection != null)
