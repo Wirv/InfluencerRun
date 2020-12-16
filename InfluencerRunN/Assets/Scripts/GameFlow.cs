@@ -230,11 +230,16 @@ public class GameFlow : MonoBehaviourPunCallbacks
             PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
             PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RO()), Rand(ground), Quaternion.identity);
         }
+
         if (RandSpawnTrap() == 0)
         {
             SpawnTraps();
         }
 
+        if (RandSpawnTrap() == 0)
+        {
+            SpawnSpeedBoost();
+        }
 
         Z = 20;
         CalculateNextGround(Z);
@@ -278,6 +283,46 @@ public class GameFlow : MonoBehaviourPunCallbacks
                 break;
             default:
                 return Quaternion.Euler(new Vector3(0, 0, 0));
+                break;
+        }
+    }
+
+    private void SpawnSpeedBoost()
+    {
+        switch (direction)
+        {
+            case Direzione.Nord:
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "SpeedBoost"), new Vector3(nextGroundSpawn.x - 8, 0.5f, nextGroundSpawn.z + 0.15f), Quaternion.identity);
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "SpeedBoost"), new Vector3(nextGroundSpawn.x + 2.75f, 0.5f, nextGroundSpawn.z + 0.15f), Quaternion.identity);
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "SpeedBoost"), new Vector3(nextGroundSpawn.x - 2.75f, 0.5f, nextGroundSpawn.z + 0.15f), Quaternion.identity);
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "SpeedBoost"), new Vector3(nextGroundSpawn.x + 8, 0.5f, nextGroundSpawn.z + 0.15f), Quaternion.identity);
+                break;
+
+            case Direzione.Ovest:
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "SpeedBoost"), new Vector3(nextGroundSpawn.x + 0.15f, 0.5f, nextGroundSpawn.z - 8), Quaternion.identity);
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "SpeedBoost"), new Vector3(nextGroundSpawn.x + 0.15f, 0.5f, nextGroundSpawn.z + 2.75f), Quaternion.identity);
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "SpeedBoost"), new Vector3(nextGroundSpawn.x + 0.15f, 0.5f, nextGroundSpawn.z - 2.75f), Quaternion.identity);
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "SpeedBoost"), new Vector3(nextGroundSpawn.x + 0.15f, 0.5f, nextGroundSpawn.z + 8), Quaternion.identity);
+                break;
+
+            case Direzione.Est:
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "SpeedBoost"), new Vector3(nextGroundSpawn.x + 0.15f, 0.5f, nextGroundSpawn.z - 8), Quaternion.identity);
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "SpeedBoost"), new Vector3(nextGroundSpawn.x + 0.15f, 0.5f, nextGroundSpawn.z + 2.75f), Quaternion.identity);
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "SpeedBoost"), new Vector3(nextGroundSpawn.x + 0.15f, 0.5f, nextGroundSpawn.z - 2.75f), Quaternion.identity);
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "SpeedBoost"), new Vector3(nextGroundSpawn.x + 0.15f, 0.5f, nextGroundSpawn.z + 8), Quaternion.identity);
+                break;
+
+            case Direzione.Sud:
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "SpeedBoost"), new Vector3(nextGroundSpawn.x - 8, 0.5f, nextGroundSpawn.z + 0.15f), Quaternion.identity);
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "SpeedBoost"), new Vector3(nextGroundSpawn.x + 2.75f, 0.5f, nextGroundSpawn.z + 0.15f), Quaternion.identity);
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "SpeedBoost"), new Vector3(nextGroundSpawn.x - 2.75f, 0.5f, nextGroundSpawn.z + 0.15f), Quaternion.identity);
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "SpeedBoost"), new Vector3(nextGroundSpawn.x + 8, 0.5f, nextGroundSpawn.z + 0.15f), Quaternion.identity);
+                break;
+            default:
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "SpeedBoost"), new Vector3(nextGroundSpawn.x - 8, 0.5f, nextGroundSpawn.z + 0.15f), Quaternion.identity);
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "SpeedBoost"), new Vector3(nextGroundSpawn.x + 2.75f, 0.5f, nextGroundSpawn.z + 0.15f), Quaternion.identity);
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "SpeedBoost"), new Vector3(nextGroundSpawn.x - 2.75f, 0.5f, nextGroundSpawn.z + 0.15f), Quaternion.identity);
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "SpeedBoost"), new Vector3(nextGroundSpawn.x + 8, 0.5f, nextGroundSpawn.z + 0.15f), Quaternion.identity);
                 break;
         }
     }
