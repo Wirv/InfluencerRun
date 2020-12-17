@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player_Behaviour : MonoBehaviour
+public class Player_Behaviour : MonoBehaviourPun, IPunObservable
 {
     PhotonView PV;
 
@@ -29,6 +29,9 @@ public class Player_Behaviour : MonoBehaviour
 
     private Vector2 startTouch, swipeDelta;
     private bool tap = false, isDraging = false;
+
+    public Vector3 networkPosition;
+    public Quaternion networkRotation;
 
     private void Awake()
     {
@@ -63,6 +66,34 @@ public class Player_Behaviour : MonoBehaviour
             MoveTouch();
         }
 
+    }
+
+    private void FixedUpdate()
+    {
+        if (!PV.IsMine)
+        {
+            rb.position = Vector3.MoveTowards(rb.position, networkPosition, Time.fixedDeltaTime);
+            rb.rotation = Quaternion.RotateTowards(rb.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(this.rb.position);
+            stream.SendNext(this.rb.rotation);
+            stream.SendNext(this.rb.velocity);
+        }
+        else
+        {
+            networkPosition = (Vector3)stream.ReceiveNext();
+            networkRotation = (Quaternion)stream.ReceiveNext();
+            rb.velocity = (Vector3)stream.ReceiveNext();
+
+            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.timestamp));
+            networkPosition += (this.rb.velocity * lag);
+        }
     }
 
     private void Move()

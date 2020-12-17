@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using System.IO;
 using Photon.Realtime;
+using TMPro;
 
 public enum Direzione
 {
@@ -44,6 +45,9 @@ public class GameFlow : MonoBehaviourPunCallbacks
     Player[] allPlayers;
     public static bool start = false;
 
+    private int countdown = 3;
+    [SerializeField] TMP_Text countDownTXT;
+
     private void Awake()
     {
         instance = this;
@@ -68,7 +72,8 @@ public class GameFlow : MonoBehaviourPunCallbacks
             if(allPlayers[i] == PhotonNetwork.LocalPlayer)
                 PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerContainer"), spawnPoints[i].gameObject.transform.position, Quaternion.identity);
         }
-        start = true;
+
+        StartCoroutine(contoAllaRovescia());
         if(PhotonNetwork.IsMasterClient)
         StartCoroutine(spawnGround());
     }
@@ -147,7 +152,9 @@ public class GameFlow : MonoBehaviourPunCallbacks
                 break;
 
             case 2:
-                return "Rock";
+                if (start == true)
+                    return "Rock";
+                else return "Obstacle";
                 break;
 
             case 3:
@@ -178,6 +185,26 @@ public class GameFlow : MonoBehaviourPunCallbacks
             case Direzione.Sud:
                 nextGroundSpawn.z -= x;
                 break;
+        }
+    }
+
+    IEnumerator contoAllaRovescia()
+    {
+
+        countDownTXT.text = countdown.ToString();
+
+        yield return new WaitForSeconds(1);
+
+        countdown -= 1;
+
+        if (countdown == 0) 
+        {
+            Destroy(countDownTXT.gameObject);
+            start = true;
+        }
+        else
+        {
+            StartCoroutine(contoAllaRovescia());
         }
     }
     
