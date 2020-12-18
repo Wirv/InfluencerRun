@@ -72,7 +72,7 @@ public class GameFlow : MonoBehaviourPunCallbacks
         for(int i = 0; i < allPlayers.Length; i++)
         {
             if(allPlayers[i] == PhotonNetwork.LocalPlayer)
-                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerContainer"), spawnPoints[Random.Range(0,spawnPoints.Count)].gameObject.transform.position, Quaternion.identity);
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerContainer"), spawnPoints[i].gameObject.transform.position, Quaternion.identity);
         }
 
         StartCoroutine(contoAllaRovescia());
@@ -168,6 +168,30 @@ public class GameFlow : MonoBehaviourPunCallbacks
         }
     }
 
+    private string RI()
+    {
+        int i = Random.Range(0, 3);
+
+        switch (i)
+        {
+            case 0:
+                return "Incrocio";
+                break;
+
+            case 1:
+                return "IncrocioS";
+                break;
+
+            case 2:
+                return "IncrocioD";
+                break;
+
+            default:
+                return "Incrocio";
+                break;
+        }
+    }
+
     private void CalculateNextGround(float x)
     {
         switch (direction)
@@ -218,7 +242,7 @@ public class GameFlow : MonoBehaviourPunCallbacks
         {
             CalculateNextGround(Z);
             counter += 1;
-            IncrocioinGame = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Incrocio"), new Vector3(nextGroundSpawn.x, nextGroundSpawn.y, nextGroundSpawn.z), SpawnRotation()).gameObject;
+            IncrocioinGame = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", RI()), new Vector3(nextGroundSpawn.x, nextGroundSpawn.y, nextGroundSpawn.z), SpawnRotation()).gameObject;
         
             Z = 0;
             CalculateNextGround(Z);

@@ -52,6 +52,11 @@ public class Player_Behaviour : MonoBehaviourPun, IPunObservable
         
     }
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        
+    }
+
     public Vector2 SwipeDelta { get { return swipeDelta; } }
 
     // Update is called once per frame
@@ -68,34 +73,7 @@ public class Player_Behaviour : MonoBehaviourPun, IPunObservable
 
     }
 
-    private void FixedUpdate()
-    {
-        if (!PV.IsMine)
-        {
-            rb.position = Vector3.MoveTowards(rb.position, networkPosition, Time.fixedDeltaTime);
-            rb.rotation = Quaternion.RotateTowards(rb.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
-        }
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            stream.SendNext(this.rb.position);
-            stream.SendNext(this.rb.rotation);
-            stream.SendNext(this.rb.velocity);
-        }
-        else
-        {
-            networkPosition = (Vector3)stream.ReceiveNext();
-            networkRotation = (Quaternion)stream.ReceiveNext();
-            rb.velocity = (Vector3)stream.ReceiveNext();
-
-            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.timestamp));
-            networkPosition += (this.rb.velocity * lag);
-        }
-    }
-
+    
     private void Move()
     {
         transform.position = Vector3.Lerp(transform.position, posDesignata.transform.position, force * Time.deltaTime);
@@ -307,16 +285,17 @@ public class Player_Behaviour : MonoBehaviourPun, IPunObservable
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log(collision.gameObject.name);
         if (collision.gameObject.tag == "Obstacle")
-            if (!GameOver)
+        {
+
+            Destroy(collision.gameObject);
+            if (PV.IsMine)
             {
-                Destroy(collision.gameObject);
-                if (PV.IsMine)
-                {
-                    force = 400;
-                    StartCoroutine(Hit());
-                }
+                force = 400;
+                StartCoroutine(Hit());
             }
+        }  
     }
 
     private void OnTriggerEnter(Collider other)
