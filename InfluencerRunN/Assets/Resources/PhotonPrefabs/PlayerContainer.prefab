@@ -434,7 +434,6 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: -5344901769693485919}
   - {fileID: -6890226061275831296}
   viewIdField: 0
   InstantiationId: 0
@@ -523,6 +522,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3005651222063595203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5634982695983597524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4513957933fde724eb68d3172272665c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3713246413002793554
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -530,21 +541,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1694954625543255674}
     m_Modifications:
-    - target: {fileID: 596060276943537507, guid: db57732b5af08f54f9e51901e257a444,
-        type: 3}
-      propertyPath: ObservedComponents.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 2597919135485213758, guid: db57732b5af08f54f9e51901e257a444,
         type: 3}
       propertyPath: camera
       value: 
       objectReference: {fileID: 1694954624272200479}
-    - target: {fileID: 4089819524981320177, guid: db57732b5af08f54f9e51901e257a444,
-        type: 3}
-      propertyPath: ObservedComponents.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 5072448854659886915, guid: db57732b5af08f54f9e51901e257a444,
         type: 3}
       propertyPath: m_Name
@@ -607,6 +608,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db57732b5af08f54f9e51901e257a444, type: 3}
+--- !u!1 &5634982695983597524 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9059944032114124166, guid: db57732b5af08f54f9e51901e257a444,
+    type: 3}
+  m_PrefabInstance: {fileID: 3713246413002793554}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7458874377905602433 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6055977323613986259, guid: db57732b5af08f54f9e51901e257a444,

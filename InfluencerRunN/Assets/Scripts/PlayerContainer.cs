@@ -56,13 +56,26 @@ public class PlayerContainer : MonoBehaviourPun
                         if (pointDirection.transform.GetChild(i).tag == tagSpawn)
                             Target = pointDirection.transform.GetChild(i).transform;
                     }
-                transform.rotation = Quaternion.Slerp(transform.rotation, Target.rotation, Player_Behaviour.instance.speed * Time.deltaTime);
+                StartCoroutine(LerpFunction(Target.rotation, 1));
                 transform.position = Vector3.Lerp(transform.position, Target.position, ((Player_Behaviour.instance.speed / 2) / 2) * Time.deltaTime);
             }
         }
     }
 
-   
+    IEnumerator LerpFunction(Quaternion endValue, float duration)
+    {
+        float time = 0;
+        Quaternion startValue = transform.rotation;
+
+        while (time < duration)
+        {
+            transform.rotation = Quaternion.Lerp(startValue, endValue, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        transform.rotation = endValue;
+    }
+
 
     //private Quaternion PlayerRotation()
     //{

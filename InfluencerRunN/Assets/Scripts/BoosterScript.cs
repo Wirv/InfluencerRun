@@ -14,14 +14,7 @@ public class BoosterScript : MonoBehaviour
         {
             Player_Behaviour pScript = other.transform.parent.GetComponent<Player_Behaviour>(); // prendi lo script del player
 
-            if (pScript!=null)
-            {
-                pScript.SpeedBoost(SpeedBoost, BoostDuration);  //fagli partire il metodo per lo speedboost
-            }
-            else
-            {
-                Debug.LogError($"PlayerBehaviour non trovato nel gameobject {other.name}");
-            }
+            StartCoroutine(pScript.SpeedBoost(SpeedBoost, BoostDuration));  //fagli partire il metodo per lo speedboost
         }
     }
 }

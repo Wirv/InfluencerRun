@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player_Behaviour : MonoBehaviourPun, IPunObservable
+public class Player_Behaviour : MonoBehaviourPun
 {
     PhotonView PV;
 
@@ -49,11 +49,6 @@ public class Player_Behaviour : MonoBehaviourPun, IPunObservable
             posDesignata = camera.PosC.transform;
             startTouch = swipeDelta = Vector2.zero;
         }
-        
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
         
     }
 
@@ -283,19 +278,15 @@ public class Player_Behaviour : MonoBehaviourPun, IPunObservable
         Time.timeScale = 0;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    
+    public void Collisions(GameObject obj)
     {
-        Debug.Log(collision.gameObject.name);
-        if (collision.gameObject.tag == "Obstacle")
+        Destroy(obj);
+        if (PV.IsMine)
         {
-
-            Destroy(collision.gameObject);
-            if (PV.IsMine)
-            {
-                force = 400;
-                StartCoroutine(Hit());
-            }
-        }  
+            force = 400;
+            StartCoroutine(Hit());
+        }
     }
 
     private void OnTriggerEnter(Collider other)
