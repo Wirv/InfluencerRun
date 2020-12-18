@@ -48,6 +48,8 @@ public class GameFlow : MonoBehaviourPunCallbacks
     private int countdown = 3;
     [SerializeField] TMP_Text countDownTXT;
 
+    public GameObject imaginetest;
+
     private void Awake()
     {
         instance = this;
@@ -70,7 +72,7 @@ public class GameFlow : MonoBehaviourPunCallbacks
         for(int i = 0; i < allPlayers.Length; i++)
         {
             if(allPlayers[i] == PhotonNetwork.LocalPlayer)
-                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerContainer"), spawnPoints[i].gameObject.transform.position, Quaternion.identity);
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerContainer"), spawnPoints[Random.Range(0,spawnPoints.Count)].gameObject.transform.position, Quaternion.identity);
         }
 
         StartCoroutine(contoAllaRovescia());

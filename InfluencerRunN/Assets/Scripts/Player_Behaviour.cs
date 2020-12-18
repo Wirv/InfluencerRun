@@ -355,7 +355,15 @@ public class Player_Behaviour : MonoBehaviourPun, IPunObservable
     {
         float oldSpeed = force;
         force += boostValue;
+        if (PV.IsMine)
+        {
+            GameFlow.instance.imaginetest.SetActive(true);
+        }
         yield return new WaitForSeconds(duration);
         force = oldSpeed;
+        if (PV.IsMine)
+        {
+            GameFlow.instance.imaginetest.SetActive(false);
+        }
     }
 }
